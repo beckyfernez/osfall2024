@@ -4,25 +4,25 @@ fn is_even(n: i32) -> bool {
 }
 
 fn main() {
-    // Create an array of 10 integer numbers
+    // 10 integer numbers
     let numbers = [15, 7, 3, 9, 12, 5, 20, 25, 8, 1];
 
-    // For loop to iterate through the array
     for &num in numbers.iter() {
+
+        let even_odd = if is_even(num) { "even" } else { "odd" };
+        
         if num % 3 == 0 && num % 5 == 0 {
-            println!("FizzBuzz");
+            println!("{} - FizzBuzz", even_odd);
         } else if num % 3 == 0 {
-            println!("Fizz");
+            println!("{} - Fizz", even_odd);
         } else if num % 5 == 0 {
-            println!("Buzz");
-        } else if is_even(num) {
-            println!("{} is even", num);
+            println!("{} - Buzz", even_odd);
         } else {
-            println!("{} is odd", num);
-        }
+            println!("{}", even_odd);
+        } 
     }
 
-    // While loop to find the sum of all numbers
+    // Find the sum of array
     let mut sum = 0;
     let mut i = 0;
     while i < numbers.len() {
@@ -31,7 +31,7 @@ fn main() {
     }
     println!("Sum of all numbers: {}", sum);
 
-    // Loop to find the largest number
+    // Find largest number in array
     let mut largest = numbers[0];
     for &num in numbers.iter() {
         if num > largest {
