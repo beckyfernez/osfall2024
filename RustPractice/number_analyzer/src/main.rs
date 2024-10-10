@@ -5,7 +5,7 @@ fn is_even(n: i32) -> bool {
 
 fn main() {
     // 10 integer numbers
-    let numbers = [15, 7, 3, 9, 12, 5, 20, 25, 8, 1];
+    let numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15];
 
     for &num in numbers.iter() {
 
