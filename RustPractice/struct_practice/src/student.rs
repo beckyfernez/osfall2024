@@ -31,4 +31,21 @@ impl Student {
     }
 }
 
+#[cfg(test)]
+mod tests {
+    use super::*;
 
+    #[test]
+    fn test_student_creation() {
+        let s = Student::new_student("Alex".to_string(),
+                            "Computer Science".to_string());
+        assert_eq!(s.name, "Alex".to_string());
+    }
+
+    //#[test]
+    //fn test_major_creation() {
+        //let s = Student::new_major("Alex".to_string(),
+                            //"Computer Science".to_string());
+        //assert_eq!(s.major, "Computer Science".to_string());
+    //}
+}
