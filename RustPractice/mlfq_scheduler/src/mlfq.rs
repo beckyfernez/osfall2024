@@ -30,48 +30,48 @@ impl MLFQ {
 
     // Exercise 1: Queue Management
     pub fn add_process(&mut self, mut process: Process) {
-        // Ensure the process's priority is within the valid range
+        // Check to see if process's priority is within the range
         if process.priority >= self.num_levels {
-            // If priority is out of range, place it in the lowest priority queue
+            // If priority is not in range, move to lowest priority queue
             process.priority = self.num_levels - 1;
         }
 
-        // Add the process to the appropriate queue based on its priority
+        // Add the process to queue based on priority
         self.queues[process.priority].push(process);
     }
 
     // Exercise 2: Process Execution
     pub fn execute_process(&mut self, queue_index: usize) {
-        // Check if the queue is empty
+        // Check if queue is empty
         if self.queues[queue_index].is_empty() {
             return;
         }
 
-        // Get the time quantum for this queue
+        // Get time for this queue
         let time_quantum = self.time_quanta[queue_index];
 
         // Remove the process from the front of the queue
         let mut process = self.queues[queue_index].remove(0);
 
-        // Calculate execution time (minimum of remaining time and time quantum)
+        // Execution time calculation
         let execution_time = std::cmp::min(process.remaining_time, time_quantum);
 
         // Update process times
         process.remaining_time -= execution_time;
         process.total_executed_time += execution_time;
 
-        // Update MLFQ's current time
+        // Update MLFQ current time
         self.current_time += execution_time;
 
         if process.remaining_time > 0 {
             // Process is not completed
             if execution_time == time_quantum {
-                // Process used its full time quantum, move it to a lower priority queue
+                // Full time is used, so move process to lower priority queue
                 let new_priority = std::cmp::min(process.priority + 1, self.num_levels - 1);
                 process.priority = new_priority;
                 self.queues[new_priority].push(process);
             } else {
-                // Process didn't use its full time quantum, keep it in the same queue
+                // Full time is NOT used, keep process in the same queue
                 self.queues[queue_index].push(process);
             }
         }
@@ -79,7 +79,7 @@ impl MLFQ {
 
     // Exercise 3: Priority Boost
     pub fn priority_boost(&mut self) {
-        // Move all processes from lower priority queues to the highest priority queue
+        // Boost all processes from lower queues to the highest queue
         for i in 1..self.num_levels {
             while let Some(mut process) = self.queues[i].pop() {
                 process.priority = 0;
